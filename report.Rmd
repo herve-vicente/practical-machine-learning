@@ -97,7 +97,7 @@ rfModel<-train(training.clean[,-54],training.clean[,54],method="rf",trControl = 
 rfCM<-confusionMatrix(validating$classe,predict(rfModel,validating.clean[,-54]))
 print(rfCM)
 ```
-The best RF model was obtained for a tuning value of 
+The best RF model was obtained for a tuning value of mtry = 19.
 From the confusion matrix we can see that the accuracy of the RF model is `r rfCM$overall[1]`
 
 ### Support Vector Machines
@@ -111,7 +111,7 @@ svmModel<-train(training.clean[,-54],training.clean[,54],method="svmRadial",tune
 svmCM<-confusionMatrix(validating$classe,predict(svmModel,validating.clean[,-54]))
 print(svmCM)
 ```
-The best SVM model was obtained for a tuning value of 
+The tuning parameter 'sigma' was held constant at a value of 0.01355. The best SVM model was obtained for a tuning value of sigma = 0.01355 and C = 64.
 From the confusion matrix we can see that the accuracy of the SVM model is `r svmCM$overall[1]`
 
 ### C5.0 Classification trees
@@ -125,16 +125,31 @@ c5Model<-train(training.clean[,-54],training.clean[,54],method="C5.0",trControl 
 C50CM<-confusionMatrix(validating.clean$classe,predict(c5Model,validating.clean[,-54]))
 print(C50CM)
 ```
-The best C50 model was obtained for the tuning value of 
+The best C50 model was obtained for the tuning value of trials = 20, model = rules and winnow = TRUE.
 From the confusion matrix we can see that the accuracy of the classification trees model is `r C50CM$overall[1]`
 
 ### Selection of best model
-We can now select the best model using the reported confusion matrix accuracies on the validation dataset. We can see that the C50 model is the most accurate at predicting the validation set.
+We can now select the best model using the reported confusion matrix accuracies on the validation dataset. We can see that the C50 model is the most accurate at predicting the validation set with an accuracy of 0.9985.
 
 ### Out of sample error
 Now that the best model is selected, we can then estimate the out of sample error rate using the testing dataset. In fact since this dataset has not been used at all in the algorithm training or selection, the error on that dataset is considered to be the best estimator of the out of sample dataset.
+```{r,cache=TRUE}
+bestCM<-confusionMatrix(testing.clean$classe,predict(c5Model,testing.clean[,-54]))
+print(bestCM)
+```
+From the confusion matrix we can see that the expected out of sample accuracy is `r bestCM$overall[1]`
+
+### Prediction of the testing dataset
+Now let's predict the classe of the test dataset provided.
+```{r,warning=FALSE,quietly=T}
+answers<-predict(c5Model,dtTest)
+print(answers)
+```
+
 
 # Results
+All 3 models perform very well. The C5.0 classification tree appears marginally better.
+
 
 # Conclusions
 This report shows how its is possible to apply machine learning techniques using the caret package to learn how to perform accurately Human Activity Recognition task.
