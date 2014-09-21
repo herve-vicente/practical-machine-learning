@@ -1,6 +1,8 @@
 base
+C50
 caret
 ggplot2
 kernlab
 lattice
+plyr
 randomForest

@@ -129,26 +129,12 @@ The best C50 model was obtained for the tuning value of
 From the confusion matrix we can see that the accuracy of the classification trees model is `r C50CM$overall[1]`
 
 ### Selection of best model
-
+We can now select the best model using the reported confusion matrix accuracies on the validation dataset. We can see that the C50 model is the most accurate at predicting the validation set.
 
 ### Out of sample error
+Now that the best model is selected, we can then estimate the out of sample error rate using the testing dataset. In fact since this dataset has not been used at all in the algorithm training or selection, the error on that dataset is considered to be the best estimator of the out of sample dataset.
 
 # Results
 
 # Conclusions
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r}
-summary(cars)
-```
-
-You can also embed plots, for example:
-
-```{r, echo=FALSE}
-plot(cars)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+This report shows how its is possible to apply machine learning techniques using the caret package to learn how to perform accurately Human Activity Recognition task.
